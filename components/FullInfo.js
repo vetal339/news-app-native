@@ -12,9 +12,7 @@ export default function FullInfo({route}) {
 
     return (
         <View style={gStyle.main}>
-            <Image source={{
-                width: '100%',
-                height: 200,
+            <Image style={styles.image} source={{
                 uri: route.params.img
             }}/>
             <Text style={[gStyle.title, styles.header]}>{route.params.name}</Text>
@@ -34,5 +32,9 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         marginTop: 25
+    },
+    image: {
+        width: '100%',
+        height: 200,
     }
 });

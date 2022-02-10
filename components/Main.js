@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Modal } from 'react-native';
 import { gStyle } from "../styles/style";
+import { Ionicons } from '@expo/vector-icons';
 
 
 
@@ -13,14 +14,23 @@ export default function Main({navigation}) {
         {name: 'FaceBook', anons: 'FaceBook!!!', full: 'FaceBook is cool!!!', key: '3', img: 'https://avatars.mds.yandex.net/i?id=cfff8a93c82ae7851d4d1fe3fd8bafad-5276390-images-thumbs&n=13'}
     ]);
 
+    const [modalWindow, setModalWindow] = useState(false);
+
         return (
             <View style={gStyle.main}>
+                <Modal visible={modalWindow}>
+                    <View style={gStyle.main}>
+                        <Ionicons name="close-circle" size={34} color="red" style={styles.iconClose} onPress={() => setModalWindow(false)}/>
+                        <Text style={styles.title}>
+                            Форма добавления статей
+                        </Text>
+                    </View>
+                </Modal>
+                <Ionicons name="ios-add-circle-sharp" size={34} color="green" style={styles.iconAdd} onPress={() => setModalWindow(true)} />
                 <Text style={[gStyle.title, styles.header]}>Главная страница</Text>
                 <FlatList data={news} renderItem={({item}) => (
                     <TouchableOpacity style={styles.item} onPress={() =>  navigation.navigate('FullInfo', item)}>
-                        <Image source={{
-                            width: '100%',
-                            height: 200,
+                        <Image style={styles.image} source={{
                             uri: item.img
                         }}/>
                     <Text style={styles.title}>{item.name}</Text>
@@ -52,5 +62,16 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 5,
         color: '#474747'
+    },
+    image: {
+        width: '100%',
+        height: 200,
+    },
+    iconAdd: {
+        textAlign: 'center',
+        marginBottom: 15,
+    },
+    iconClose: {
+        textAlign: 'center'
     }
 });
