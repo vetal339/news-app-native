@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, Modal } from 'react-native';
 import { gStyle } from "../styles/style";
 import { Ionicons } from '@expo/vector-icons';
+import Form from './Form';
 
 
 
@@ -16,6 +17,17 @@ export default function Main({navigation}) {
 
     const [modalWindow, setModalWindow] = useState(false);
 
+    const addArticle = (article) => {
+        setNews((list) => {
+            article.key = Math.random().toString();
+            return [
+                article,
+                ...list
+            ]
+        });
+        setModalWindow(false);
+    }
+
         return (
             <View style={gStyle.main}>
                 <Modal visible={modalWindow}>
@@ -24,6 +36,7 @@ export default function Main({navigation}) {
                         <Text style={styles.title}>
                             Форма добавления статей
                         </Text>
+                        <Form addArticle={addArticle}/>
                     </View>
                 </Modal>
                 <Ionicons name="ios-add-circle-sharp" size={34} color="green" style={styles.iconAdd} onPress={() => setModalWindow(true)} />
